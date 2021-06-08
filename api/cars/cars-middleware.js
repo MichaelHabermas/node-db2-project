@@ -15,8 +15,21 @@ const checkCarId = (req, res, next) => {
 		.catch(next);
 };
 
-const checkCarPayload = (req, res, next) => {};
+const checkCarPayload = (req, res, next) => {
+	console.log('checkCarPayload: ', checkCarPayload);
+};
 
-const checkVinNumberValid = (req, res, next) => {};
+const checkVinNumberValid = (req, res, next) => {
+	console.log('checkVinNumberValid: ', checkVinNumberValid);
+};
 
-const checkVinNumberUnique = (req, res, next) => {};
+const checkVinNumberUnique = (req, res, next) => {
+	console.log('checkVinNumberUnique: ', checkVinNumberUnique);
+};
+
+module.exports = {
+	checkCarId,
+	checkCarPayload,
+	checkVinNumberValid,
+	checkVinNumberUnique
+};
