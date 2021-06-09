@@ -12,18 +12,14 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', checkCarId, (req, res, next) => {
-	Cars.getById(req.params.id)
-		.then(car => {
-			res.status(200).json(car);
-		})
-		.catch(next);
+	res.status(200).json(req.car);
 });
 
 router.post('/', checkCarPayload, checkVinNumberValid, checkVinNumberUnique, (req, res, next) => {
-	const { vin, make, model, milage, title, transmission } = req.body;
-	Cars.create({ vin, make, model, milage, title, transmission })
-		.then(newCar => {
-			res.status(200).json(newCar);
+	// const { vin, make, model, mileage, title = '', transmission = '' } = req.body;
+	Cars.create(req.body)
+		.then(() => {
+			res.status(200).json(req.newCar);
 		})
 		.catch(next);
 });

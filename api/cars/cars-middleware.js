@@ -7,9 +7,10 @@ const checkCarId = (req, res, next) => {
 			if (!car) {
 				next({
 					status: 404,
-					message: 'car with id <car id> is not found'
+					message: `car with id ${req.params.id} is not found`
 				});
 			} else {
+				req.car = car;
 				next();
 			}
 		})
@@ -17,14 +18,17 @@ const checkCarId = (req, res, next) => {
 };
 
 const checkCarPayload = (req, res, next) => {
-	let fieldName = '';
-	if (!req.body.make) {
-		fieldName = 'make';
-		next({
-			status: 400,
-			message: `${fieldName} is missing`
-		});
+	const { vin, make, model, mileage, title, transmission } = req.body;
+	if (!vin) {
+		next({ status: 400, message: 'vin is missing' });
+	} else if (!make) {
+		next({ status: 400, message: 'make is missing' });
+	} else if (!model) {
+		next({ status: 400, message: 'model is missing' });
+	} else if (!mileage) {
+		next({ status: 400, message: 'mileage is missing' });
 	} else {
+		req.newCar = { vin, make, model, mileage, title, transmission };
 		next();
 	}
 };
@@ -41,14 +45,18 @@ const checkVinNumberValid = (req, res, next) => {
 };
 
 const checkVinNumberUnique = (req, res, next) => {
-	if () {
-		next();
-	} else {
-		next({
-			status: 400,
-			message: `vin ${req.body.vin} already exists`
-		});
-	}
+	Cars.getByVin(req.body.vin)
+		.then(vin => {
+			if (!vin) {
+				next({
+					status: 400,
+					message: `vin ${req.body.vin} already exists`
+				});
+			} else {
+				next();
+			}
+		})
+		.catch(next);
 };
 
 module.exports = {
