@@ -18,7 +18,7 @@ const checkCarId = (req, res, next) => {
 };
 
 const checkCarPayload = (req, res, next) => {
-	const { vin, make, model, mileage, title, transmission } = req.body;
+	const { vin, make, model, mileage } = req.body;
 	if (!vin) {
 		next({ status: 400, message: 'vin is missing' });
 	} else if (!make) {
@@ -28,14 +28,6 @@ const checkCarPayload = (req, res, next) => {
 	} else if (!mileage) {
 		next({ status: 400, message: 'mileage is missing' });
 	} else {
-		// req.newCar = {
-		// 	vin: vin,
-		// 	make: make.trim(),
-		// 	model: model.trim(),
-		// 	mileage,
-		// 	title: title.trim(),
-		// 	transmission: transmission.trim()
-		// };
 		next();
 	}
 };
