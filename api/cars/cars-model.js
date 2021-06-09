@@ -3,6 +3,7 @@ const db = require('../../data/db-config');
 const getAll = () => {
 	return db('cars');
 };
+a;
 
 const getById = id => {
 	return db('cars').where({ id }, id).first();
