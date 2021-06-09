@@ -28,7 +28,14 @@ const checkCarPayload = (req, res, next) => {
 	} else if (!mileage) {
 		next({ status: 400, message: 'mileage is missing' });
 	} else {
-		req.newCar = { vin, make, model, mileage, title, transmission };
+		// req.newCar = {
+		// 	vin: vin,
+		// 	make: make.trim(),
+		// 	model: model.trim(),
+		// 	mileage,
+		// 	title: title.trim(),
+		// 	transmission: transmission.trim()
+		// };
 		next();
 	}
 };
@@ -47,7 +54,7 @@ const checkVinNumberValid = (req, res, next) => {
 const checkVinNumberUnique = (req, res, next) => {
 	Cars.getByVin(req.body.vin)
 		.then(vin => {
-			if (!vin) {
+			if (vin) {
 				next({
 					status: 400,
 					message: `vin ${req.body.vin} already exists`

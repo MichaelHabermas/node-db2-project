@@ -9,11 +9,11 @@ const getById = id => {
 };
 
 const getByVin = vin => {
-	return db('cars').where({ vin }, vin).first();
+	return db('cars').where('vin', vin).first();
 };
 
-async function create({ vin, make, model, mileage, title, transmission }) {
-	const [id] = await db('cars').insert({ vin, make, model, mileage, title, transmission });
+async function create(newCar) {
+	const [id] = await db('cars').insert(newCar);
 	return getById(id);
 }
 
